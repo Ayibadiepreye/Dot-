@@ -33,7 +33,8 @@ const tiers: { key: Tier; features: string[]; recommended?: boolean }[] = [
 ];
 
 export default function PricingSection() {
-  const [currency, setCurrency] = useState<"NGN" | "USD">("NGN");
+  // Force NGN currency only (Paystack)
+  const currency = "NGN";
 
   return (
     <section className="py-20 bg-[#f5f4f1]">
@@ -41,10 +42,10 @@ export default function PricingSection() {
         <div className="text-center mb-10">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#0d0d0d] mb-4">Choose Your Tier</h2>
           <p className="text-neutral-600 mb-6">Pay once. Build forever. All tiers include Cohort I access.</p>
+          {/* Currency locked to NGN (Paystack only) */}
           <div className="flex items-center justify-center gap-3">
-            <span className={`text-sm ${currency === "NGN" ? "text-[#0d0d0d] font-medium" : "text-neutral-500"}`}>NGN</span>
-            <Switch checked={currency === "USD"} onCheckedChange={(c) => setCurrency(c ? "USD" : "NGN")} />
-            <span className={`text-sm ${currency === "USD" ? "text-[#0d0d0d] font-medium" : "text-neutral-500"}`}>USD</span>
+            <span className="text-sm font-medium text-[#0d0d0d]">NGN (₦)</span>
+            <span className="text-xs text-neutral-500">Paystack Payment</span>
           </div>
         </div>
 

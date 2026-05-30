@@ -20,7 +20,8 @@ const tiers: { key: Tier; features: string[]; recommended?: boolean }[] = [
 
 export default function Join() {
   const [searchParams] = useSearchParams();
-  const [currency, setCurrency] = useState<"NGN" | "USD">((searchParams.get("currency") as any) ?? "NGN");
+  // Force NGN currency only (Paystack)
+  const currency = "NGN";
   const ref = searchParams.get("ref");
 
   return (
@@ -39,10 +40,10 @@ export default function Join() {
                 Referred by: {ref}
               </p>
             )}
+            {/* Currency locked to NGN (Paystack only) */}
             <div className="flex items-center justify-center gap-3 mt-4">
-              <span className={`text-sm ${currency === "NGN" ? "font-medium text-[#0d0d0d]" : "text-neutral-500"}`}>NGN</span>
-              <Switch checked={currency === "USD"} onCheckedChange={(c) => setCurrency(c ? "USD" : "NGN")} />
-              <span className={`text-sm ${currency === "USD" ? "font-medium text-[#0d0d0d]" : "text-neutral-500"}`}>USD</span>
+              <span className="text-sm font-medium text-[#0d0d0d]">NGN (₦)</span>
+              <span className="text-xs text-neutral-500">Paystack Payment</span>
             </div>
           </div>
 
