@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-auth": "^1.6.12"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6"
+  }
+}

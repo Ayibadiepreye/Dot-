@@ -1,0 +1,41 @@
+========================================
+COPY THIS SQL TO TIDB DASHBOARD
+========================================
+
+DROP TABLE IF EXISTS whop_pending;
+DROP TABLE IF EXISTS faqs;
+DROP TABLE IF EXISTS partner_logos;
+DROP TABLE IF EXISTS event_tickets;
+DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS achievements;
+DROP TABLE IF EXISTS affiliate_clicks;
+DROP TABLE IF EXISTS affiliates;
+DROP TABLE IF EXISTS organizations;
+DROP TABLE IF EXISTS payments;
+DROP TABLE IF EXISTS wallet_transactions;
+DROP TABLE IF EXISTS wallets;
+DROP TABLE IF EXISTS oauth_connections;
+DROP TABLE IF EXISTS auth_sessions;
+DROP TABLE IF EXISTS users;
+
+========================================
+AFTER RUNNING THIS SQL:
+========================================
+
+1. Verify tables are gone:
+   SHOW TABLES;
+   (Should show empty result)
+
+2. Run in your terminal:
+   npm run db:push
+
+3. Start the app:
+   npm run dev
+
+4. Test:
+   - Sign up at http://localhost:3000/signup
+   - Login → Dashboard (see payment gate)
+   - Complete payment
+   - Payment gate disappears ✅
+
+========================================

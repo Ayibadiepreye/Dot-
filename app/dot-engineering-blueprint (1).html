@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DOT — Engineering Blueprint v1.0</title>
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --ink-2: #3a3a3a;
+    --ink-3: #6b6b6b;
+    --surface: #ffffff;
+    --surface-2: #f5f4f1;
+    --surface-3: #eeede9;
+    --accent: #0d6efd;
+    --accent-bg: #e8f0fe;
+    --green: #0f6e56;
+    --green-bg: #e1f5ee;
+    --amber: #854f0b;
+    --amber-bg: #faeeda;
+    --red: #a32d2d;
+    --red-bg: #fcebeb;
+    --purple: #534ab7;
+    --purple-bg: #eeedfe;
+    --border: #d8d7d2;
+    --border-light: #eae9e4;
+    --mono: 'Courier New', Courier, monospace;
+    --font: 'Georgia', 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 48px 100px;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 48px;
+    margin-bottom: 60px;
+  }
+  .cover-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: var(--sans);
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover-sub {
+    font-size: 17px;
+    color: var(--ink-2);
+    margin-bottom: 28px;
+    font-family: var(--sans);
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .cover-meta-item strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 2px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 36px;
+    margin-bottom: 60px;
+    page-break-after: always;
+  }
+  .toc h2 {
+    font-family: var(--sans);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .toc ol {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 40px;
+  }
+  .toc li {
+    font-family: var(--sans);
+    font-size: 13px;
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--border);
+  }
+  .toc li a {
+    color: var(--ink-2);
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+  }
+  .toc li a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-right: 8px;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-top: 52px;
+    border-top: 1px solid var(--border-light);
+  }
+  .section-header:first-of-type { border-top: none; padding-top: 0; }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    background: var(--surface-3);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  h2.section-title {
+    font-family: var(--sans);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 28px 0 10px;
+    letter-spacing: -0.01em;
+  }
+  h4 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 20px 0 8px;
+    font-weight: 600;
+  }
+
+  p { margin-bottom: 12px; color: var(--ink-2); font-size: 14.5px; }
+
+  /* ── CODE BLOCKS ── */
+  pre {
+    background: var(--ink);
+    color: #e8e8e0;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 20px 24px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 16px 0 20px;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface-3);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: 13px;
+  }
+  th {
+    background: var(--surface-3);
+    color: var(--ink);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 9px 14px;
+    border: 1px solid var(--border-light);
+    color: var(--ink-2);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--surface-2); }
+  td code { font-size: 11.5px; }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .badge-blue { background: var(--accent-bg); color: var(--accent); }
+  .badge-green { background: var(--green-bg); color: var(--green); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); }
+  .badge-red { background: var(--red-bg); color: var(--red); }
+  .badge-purple { background: var(--purple-bg); color: var(--purple); }
+  .badge-gray { background: var(--surface-3); color: var(--ink-3); }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    border-left: 3px solid;
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0 20px;
+    font-family: var(--sans);
+    font-size: 13.5px;
+  }
+  .callout-info { border-color: var(--accent); background: var(--accent-bg); color: #0a3d7a; }
+  .callout-warn { border-color: #e0a020; background: var(--amber-bg); color: var(--amber); }
+  .callout-danger { border-color: var(--red); background: var(--red-bg); color: var(--red); }
+  .callout-success { border-color: var(--green); background: var(--green-bg); color: var(--green); }
+  .callout strong { font-weight: 600; }
+
+  /* ── FLOW DIAGRAMS ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 14px 0 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .flow-step {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 14px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .flow-step.start { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .flow-step.end { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 600; }
+  .flow-step.action { background: var(--purple-bg); border-color: var(--purple); color: var(--purple); }
+  .flow-step.check { background: var(--amber-bg); border-color: #e0a020; color: var(--amber); }
+  .flow-arrow { color: var(--ink-3); font-size: 14px; }
+
+  /* ── GRID CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 16px 0 24px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    background: var(--surface);
+  }
+  .card-title {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .card p { font-size: 13px; margin-bottom: 0; }
+
+  /* ── TIER TABLE ── */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 16px 0 24px;
+  }
+  .tier-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .tier-card.featured { border-color: var(--accent); border-width: 2px; }
+  .tier-name {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .tier-price {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+
+  /* ── ENDPOINT LIST ── */
+  .endpoint-list { margin: 12px 0 20px; }
+  .endpoint {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-family: var(--sans);
+    font-size: 13px;
+  }
+  .method {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .method-get { background: var(--green-bg); color: var(--green); }
+  .method-post { background: var(--accent-bg); color: var(--accent); }
+  .method-put { background: var(--amber-bg); color: var(--amber); }
+  .method-delete { background: var(--red-bg); color: var(--red); }
+  .endpoint-path { font-family: var(--mono); font-size: 12px; color: var(--ink); flex: 1; }
+  .endpoint-desc { color: var(--ink-3); font-size: 12px; }
+
+  /* ── ENV VAR LIST ── */
+  .env-list { font-family: var(--mono); font-size: 12.5px; line-height: 2; }
+  .env-list span { color: var(--ink-3); }
+
+  /* ── WEEK TIMELINE ── */
+  .timeline { margin: 16px 0 24px; }
+  .week {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0 24px;
+    margin-bottom: 0;
+  }
+  .week-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 0;
+    border-right: 2px solid var(--accent-bg);
+    text-align: right;
+    padding-right: 20px;
+    position: relative;
+  }
+  .week-label::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    right: -5px;
+    top: 18px;
+  }
+  .week-content {
+    padding: 14px 0 14px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .week-content-title {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .week-items {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--ink-3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .week-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border-light); margin: 36px 0; }
+  
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { font-size: 13.5px; color: var(--ink-2); margin-bottom: 4px; font-family: var(--sans); }
+  li strong { color: var(--ink); font-weight: 600; }
+
+  @media print {
+    body { padding: 20px; }
+    .section-header { page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ COVER ═══════════════════════════════ -->
+<div class="cover">
+  <div class="cover-tag">Internal Engineering Document · Confidential</div>
+  <h1><span>DOT</span> Platform<br>Engineering Blueprint</h1>
+  <div class="cover-sub">Africa's Largest Builder Ecosystem — Cohort I Launch Architecture</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><strong>Version</strong>1.0</div>
+    <div class="cover-meta-item"><strong>Launch Date</strong>Friday, May 29 2026</div>
+    <div class="cover-meta-item"><strong>Target</strong>1,000,000 Cohort I Users</div>
+    <div class="cover-meta-item"><strong>Primary Domain</strong>joindot.africa</div>
+    <div class="cover-meta-item"><strong>Document Type</strong>Full-Stack Architecture Spec</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TOC ═══════════════════════════════ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#s1"><span class="toc-num">01</span> Platform Overview</a></li>
+    <li><a href="#s2"><span class="toc-num">02</span> Tech Stack</a></li>
+    <li><a href="#s3"><span class="toc-num">03</span> Database Schema</a></li>
+    <li><a href="#s4"><span class="toc-num">04</span> System Architecture</a></li>
+    <li><a href="#s5"><span class="toc-num">05</span> Frontend — Pages & Routes</a></li>
+    <li><a href="#s6"><span class="toc-num">06</span> Authentication System</a></li>
+    <li><a href="#s7"><span class="toc-num">07</span> Payment System</a></li>
+    <li><a href="#s8"><span class="toc-num">08</span> Wallet System</a></li>
+    <li><a href="#s9"><span class="toc-num">09</span> Whop Integration</a></li>
+    <li><a href="#s10"><span class="toc-num">10</span> Affiliate System</a></li>
+    <li><a href="#s11"><span class="toc-num">11</span> Admin Dashboard</a></li>
+    <li><a href="#s12"><span class="toc-num">12</span> Organization Dashboard</a></li>
+    <li><a href="#s13"><span class="toc-num">13</span> Event &amp; Check-in System</a></li>
+    <li><a href="#s14"><span class="toc-num">14</span> Notification System</a></li>
+    <li><a href="#s15"><span class="toc-num">15</span> Backend — Edge Functions</a></li>
+    <li><a href="#s16"><span class="toc-num">16</span> Security &amp; RLS Policies</a></li>
+    <li><a href="#s17"><span class="toc-num">17</span> Environment Variables</a></li>
+    <li><a href="#s18"><span class="toc-num">18</span> Build Timeline</a></li>
+  </ol>
+</div>
+
+
+<!-- ═══════════════════════════════ S1 — OVERVIEW ═══════════════════════════════ -->
+<div id="s1" class="section-header">
+  <span class="section-num">01</span>
+  <h2 class="section-title">Platform Overview</h2>
+</div>
+
+<p>DOT is a membership-based builder ecosystem targeting founders, creators and entrepreneurs across Africa. The MVP consists of a public landing page, a tiered membership purchase flow (Paystack for Nigerian users, Stripe for global), automatic community access provisioned via Whop, an in-app wallet, an affiliate referral system, and event check-in for the May 29 Cohort I launch event.</p>
+
+<div class="callout callout-danger">
+  <strong>Out of Scope for MVP:</strong> Public token trading, P2P marketplace, external withdrawals, lending, AI assistant. Do not build or stub any of these.
+</div>
+
+<h3>Membership Tiers</h3>
+<div class="tier-grid">
+  <div class="tier-card">
+    <div class="tier-name">Starter</div>
+    <div class="tier-price">$20 / ₦30,000</div>
+    <div class="badge badge-gray">General Access</div>
+  </div>
+  <div class="tier-card featured">
+    <div class="tier-name">VIP</div>
+    <div class="tier-price">₦1,000,000</div>
+    <div class="badge badge-blue">VIP Rooms</div>
+  </div>
+  <div class="tier-card">
+    <div class="tier-name">Pioneer</div>
+    <div class="tier-price">₦3,000,000</div>
+    <div class="badge badge-purple">Founder Rooms</div>
+  </div>
+  <div class="tier-card">
+    <div class="tier-name">Corporate</div>
+    <div class="tier-price">₦30,000,000</div>
+    <div class="badge badge-amber">Partner Rooms</div>
+  </div>
+  <div class="tier-card">
+    <div class="tier-name">Hub Partner</div>
+    <div class="tier-price">₦300,000,000</div>
+    <div class="badge badge-green">Full Access</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ S2 — TECH STACK ═══════════════════════════════ -->
+<div id="s2" class="section-header">
+  <span class="section-num">02</span>
+  <h2 class="section-title">Tech Stack</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Layer</th><th>Technology</th><th>Purpose</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Frontend Framework</strong></td><td>Next.js 14 (App Router)</td><td>All UI — landing, dashboard, admin</td><td>Use Server Components where possible; Client Components only for interactive state</td></tr>
+    <tr><td><strong>Styling</strong></td><td>Tailwind CSS v3</td><td>All styling</td><td>Purge unused classes in production build</td></tr>
+    <tr><td><strong>Backend / BaaS</strong></td><td>Supabase</td><td>DB, Auth, Storage, Realtime, Edge Functions</td><td>Project hosted on supabase.com; edge functions run on Deno Deploy</td></tr>
+    <tr><td><strong>Database</strong></td><td>PostgreSQL 15 (via Supabase)</td><td>All persistent data</td><td>Row Level Security enabled on all user-facing tables</td></tr>
+    <tr><td><strong>Auth</strong></td><td>Supabase Auth</td><td>Google OAuth, Email OTP, Phone OTP</td><td>JWT sessions; refresh token rotation enabled</td></tr>
+    <tr><td><strong>Payments (NG)</strong></td><td>Paystack</td><td>All NGN transactions</td><td>Inline JS SDK or redirect; webhook to edge function</td></tr>
+    <tr><td><strong>Payments (Global)</strong></td><td>Stripe</td><td>USD and other currency transactions</td><td>Payment Intent + webhook; redirect to success URL</td></tr>
+    <tr><td><strong>Community</strong></td><td>Whop API</td><td>Community access provisioning by tier</td><td>Create membership via Whop API post-payment</td></tr>
+    <tr><td><strong>Analytics</strong></td><td>PostHog</td><td>User events, funnels, conversion tracking</td><td>Self-hosted or cloud; capture key events: signup, payment, referral_click</td></tr>
+    <tr><td><strong>File Storage</strong></td><td>Cloudflare R2</td><td>QR code images, avatars, partner logos</td><td>Public bucket for static assets; presigned URLs for uploads</td></tr>
+    <tr><td><strong>Email</strong></td><td>Resend (recommended)</td><td>Transactional emails</td><td>Welcome, payment confirmation, referral notification</td></tr>
+    <tr><td><strong>WhatsApp</strong></td><td>WhatsApp Business API (via Twilio or direct Meta)</td><td>Post-payment WhatsApp confirmation</td><td>Template message triggered by payment webhook</td></tr>
+    <tr><td><strong>QR Codes</strong></td><td>qrcode npm package</td><td>Event ticket QR generation</td><td>Generated server-side in edge function; stored to R2</td></tr>
+    <tr><td><strong>Hosting</strong></td><td>Vercel</td><td>Next.js deployment</td><td>Preview deployments per branch; production on main</td></tr>
+    <tr><td><strong>DNS</strong></td><td>Cloudflare</td><td>joindot.africa domain</td><td>Proxied A/CNAME records pointing to Vercel</td></tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- ═══════════════════════════════ S3 — DATABASE SCHEMA ═══════════════════════════════ -->
+<div id="s3" class="section-header">
+  <span class="section-num">03</span>
+  <h2 class="section-title">Database Schema</h2>
+</div>
+
+<div class="callout callout-info">
+  All tables live in the <code>public</code> schema. The <code>auth.users</code> table is managed by Supabase. All custom user data links to it via <code>users.id = auth.users.id</code>. Enable Row Level Security on every table (policies defined in Section 16).
+</div>
+
+<h3>users</h3>
+<p>Core member profile table. Created after successful payment, linked to <code>auth.users</code>.</p>
+<pre>
+CREATE TABLE users (
+  id              UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  name            TEXT NOT NULL,
+  email           TEXT UNIQUE NOT NULL,
+  phone           TEXT UNIQUE,
+  country         TEXT,
+  state           TEXT,
+  school          TEXT,
+  organization_id UUID REFERENCES organizations(id),
+  tier            TEXT NOT NULL CHECK (tier IN ('starter','vip','pioneer','corporate','hub_partner')),
+  referral_code   TEXT UNIQUE NOT NULL,          -- 8-char alphanumeric, generated on creation
+  referred_by     TEXT REFERENCES users(referral_code),
+  wallet_id       UUID REFERENCES wallets(id),
+  whop_id         TEXT,                          -- Whop membership ID
+  whop_email      TEXT,                          -- email used on Whop (may differ)
+  builder_score   INTEGER DEFAULT 0,
+  avatar_url      TEXT,
+  onboarded       BOOLEAN DEFAULT FALSE,         -- has completed onboarding steps
+  created_at      TIMESTAMPTZ DEFAULT NOW(),
+  updated_at      TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>wallets</h3>
+<p>One wallet per user. Auto-created on user creation. View-only from the frontend.</p>
+<pre>
+CREATE TABLE wallets (
+  id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id           UUID UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  credit_balance    NUMERIC(15,2) DEFAULT 0,     -- $2000 builder credits, etc.
+  reward_balance    NUMERIC(15,2) DEFAULT 0,     -- earned via referrals/achievements
+  reputation_score  INTEGER DEFAULT 0,
+  lifetime_credits  NUMERIC(15,2) DEFAULT 0,     -- cumulative, never decreases
+  created_at        TIMESTAMPTZ DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>wallet_transactions</h3>
+<p>Immutable log of all wallet credit/debit events.</p>
+<pre>
+CREATE TABLE wallet_transactions (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  wallet_id   UUID NOT NULL REFERENCES wallets(id),
+  type        TEXT NOT NULL CHECK (type IN ('credit','debit','reward','adjustment')),
+  amount      NUMERIC(15,2) NOT NULL,
+  description TEXT,
+  reference   TEXT,                        -- payment_id, referral_id, etc.
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>payments</h3>
+<p>Stores every payment attempt and its outcome. Source of truth for billing.</p>
+<pre>
+CREATE TABLE payments (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id         UUID REFERENCES users(id),          -- NULL if pre-user (payment before account)
+  email           TEXT NOT NULL,                       -- captured from checkout
+  phone           TEXT,
+  tier            TEXT NOT NULL,
+  currency        TEXT NOT NULL CHECK (currency IN ('NGN','USD','GBP','EUR')),
+  amount          NUMERIC(15,2) NOT NULL,
+  provider        TEXT NOT NULL CHECK (provider IN ('paystack','stripe')),
+  provider_ref    TEXT UNIQUE NOT NULL,               -- Paystack reference or Stripe PaymentIntent ID
+  status          TEXT NOT NULL CHECK (status IN ('pending','success','failed','refunded')),
+  affiliate_code  TEXT,                               -- referral code used at checkout
+  metadata        JSONB DEFAULT '{}',
+  paid_at         TIMESTAMPTZ,
+  created_at      TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>organizations</h3>
+<p>Corporate or hub partner entities. A user may belong to one organization.</p>
+<pre>
+CREATE TABLE organizations (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name            TEXT NOT NULL,
+  slug            TEXT UNIQUE NOT NULL,              -- for dashboard URL
+  contact_email   TEXT,
+  country         TEXT,
+  logo_url        TEXT,
+  referral_code   TEXT UNIQUE NOT NULL,              -- org-level referral link
+  revenue_total   NUMERIC(15,2) DEFAULT 0,           -- computed or cached
+  status          TEXT DEFAULT 'active' CHECK (status IN ('active','suspended','pending')),
+  approved_by     UUID REFERENCES users(id),
+  approved_at     TIMESTAMPTZ,
+  created_at      TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>affiliates</h3>
+<p>Tracks affiliate link performance. Each user IS an affiliate automatically.</p>
+<pre>
+CREATE TABLE affiliates (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id         UUID UNIQUE NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  referral_code   TEXT UNIQUE NOT NULL,              -- same as users.referral_code
+  total_clicks    INTEGER DEFAULT 0,
+  total_signups   INTEGER DEFAULT 0,
+  total_paid      INTEGER DEFAULT 0,                 -- signups that converted to payment
+  total_revenue   NUMERIC(15,2) DEFAULT 0,
+  commission_rate NUMERIC(5,2) DEFAULT 10.00,       -- percentage; default 10%
+  is_active       BOOLEAN DEFAULT TRUE,
+  created_at      TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>affiliate_clicks</h3>
+<p>One row per tracked click. Enables fraud detection and per-click analytics.</p>
+<pre>
+CREATE TABLE affiliate_clicks (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  referral_code TEXT NOT NULL,
+  ip_address    INET,
+  user_agent    TEXT,
+  device_hash   TEXT,                      -- hashed fingerprint for duplicate detection
+  converted     BOOLEAN DEFAULT FALSE,    -- updated to TRUE when payment succeeds
+  payment_id    UUID REFERENCES payments(id),
+  clicked_at    TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>achievements</h3>
+<p>Unlockable badges and milestones per user, displayed on wallet/profile.</p>
+<pre>
+CREATE TABLE achievements (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id     UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  type        TEXT NOT NULL,               -- e.g. 'first_referral', 'builder_100', '5_paid_referrals'
+  label       TEXT NOT NULL,
+  icon        TEXT,                        -- emoji or R2 icon URL
+  unlocked_at TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>events</h3>
+<p>Launch events. May 29 is the first. Designed for reuse for future events.</p>
+<pre>
+CREATE TABLE events (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title       TEXT NOT NULL,
+  description TEXT,
+  venue       TEXT NOT NULL,              -- e.g. 'Family Hall'
+  starts_at   TIMESTAMPTZ NOT NULL,
+  ends_at     TIMESTAMPTZ,
+  is_active   BOOLEAN DEFAULT TRUE,
+  created_at  TIMESTAMPTZ DEFAULT NOW()
+);
+</pre>
+
+<h3>event_tickets</h3>
+<p>One QR ticket per eligible user per event. Generated immediately after payment.</p>
+<pre>
+CREATE TABLE event_tickets (
+  id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  event_id        UUID NOT NULL REFERENCES events(id),
+  user_id         UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  payment_id      UUID REFERENCES payments(id),
+  qr_code         TEXT NOT NULL,             -- unique token embedded in QR image
+  qr_url          TEXT,                      -- R2 URL of rendered QR PNG
+  checked_in      BOOLEAN DEFAULT FALSE,
+  checked_in_at   TIMESTAMPTZ,
+  checked_in_by   UUID REFERENCES users(id), -- ops staff who scanned
+  badge_issued    BOOLEAN DEFAULT FALSE,
+  created_at      TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(event_id, user_id)
+);
+</pre>
+
+<h3>partner_logos</h3>
+<p>Powers the partner logo strip on the landing page.</p>
+<pre>
+CREATE TABLE partner_logos (
+  id        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name      TEXT NOT NULL,
+  logo_url  TEXT NOT NULL,           -- R2 URL
+  url       TEXT,                    -- partner website
+  order     INTEGER DEFAULT 0,
+  active    BOOLEAN DEFAULT TRUE
+);
+</pre>
+
+<h3>faqs</h3>
+<p>Powers the FAQ section on the landing page, manageable from admin.</p>
+<pre>
+CREATE TABLE faqs (
+  id        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  question  TEXT NOT NULL,
+  answer    TEXT NOT NULL,
+  order     INTEGER DEFAULT 0,
+  active    BOOLEAN DEFAULT TRUE
+);
+</pre>
+
+
+<!-- ═══════════════════════════════ S4 — SYSTEM ARCHITECTURE ═══════════════════════════════ -->
+<div id="s4" class="section-header">
+  <span class="section-num">04</span>
+  <h2 class="section-title">System Architecture</h2>
+</div>
+
+<h3>High-Level System Diagram (Textual)</h3>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────────┐
+│                        Vercel (Next.js)                              │
+│  ┌──────────────┐  ┌──────────────────┐  ┌──────────────────────┐  │
+│  │ Landing Page │  │  Auth / Onboard  │  │  Member Dashboard    │  │
+│  │ /            │  │  /signup /login  │  │  /dashboard/*        │  │
+│  └──────────────┘  └──────────────────┘  └──────────────────────┘  │
+│  ┌──────────────┐  ┌──────────────────┐                             │
+│  │Admin Dashboard│ │  Org Dashboard   │                             │
+│  │ /admin/*    │  │  /org/*          │                             │
+│  └──────────────┘  └──────────────────┘                             │
+└───────────────────────────┬─────────────────────────────────────────┘
+                            │ Supabase JS Client / fetch
+┌───────────────────────────▼─────────────────────────────────────────┐
+│                     Supabase Platform                                │
+│  ┌────────────┐  ┌──────────────────┐  ┌───────────────────────┐   │
+│  │  Auth      │  │  PostgreSQL DB   │  │  Edge Functions       │   │
+│  │  (JWT)     │  │  (RLS enabled)   │  │  (Deno)               │   │
+│  └────────────┘  └──────────────────┘  └──────────┬────────────┘   │
+└─────────────────────────────────────────────────────┼───────────────┘
+                                                      │ HTTP calls
+        ┌─────────────────────────────────────────────┼─────────────┐
+        │                     │                       │             │
+   ┌────▼────┐          ┌─────▼────┐          ┌──────▼──┐   ┌──────▼──┐
+   │Paystack │          │  Stripe  │          │  Whop   │   │ Resend  │
+   │(Nigeria)│          │ (Global) │          │   API   │   │  /WA    │
+   └────┬────┘          └─────┬────┘          └─────────┘   └─────────┘
+        └──────────Webhooks───┘
+                      │
+          ┌───────────▼───────────┐
+          │  /functions/webhook   │  ← Supabase Edge Function
+          │  Verify → Create user │
+          │  → Wallet → Whop      │
+          │  → QR → Notify        │
+          └───────────────────────┘
+</pre>
+
+<h3>Critical Design Decisions</h3>
+<ul>
+  <li><strong>Payment-first flow:</strong> User pays before creating an account. The email captured at checkout is the identity anchor. After payment, they are prompted to set a password or link Google.</li>
+  <li><strong>Edge functions for sensitive ops:</strong> Payment webhook verification, Whop provisioning, wallet creation — all run server-side in Supabase Edge Functions, never in client code.</li>
+  <li><strong>Idempotency:</strong> The webhook handler checks <code>payments.provider_ref</code> before processing to prevent duplicate user creation on retry.</li>
+  <li><strong>Referral tracking:</strong> The affiliate <code>referral_code</code> is stored in a browser cookie (7-day TTL) on link click. It is read and submitted with the payment form.</li>
+</ul>
+
+
+<!-- ═══════════════════════════════ S5 — FRONTEND ═══════════════════════════════ -->
+<div id="s5" class="section-header">
+  <span class="section-num">05</span>
+  <h2 class="section-title">Frontend — Pages &amp; Routes</h2>
+</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Route</th><th>Type</th><th>Description</th><th>Auth Required</th></tr></thead>
+  <tbody>
+    <tr><td><code>/</code></td><td>Public</td><td>Landing page — hero, metrics, benefits, pricing, partners, FAQ, countdown</td><td>No</td></tr>
+    <tr><td><code>/join</code></td><td>Public</td><td>Plan selection page; redirects to payment</td><td>No</td></tr>
+    <tr><td><code>/checkout/[tier]</code></td><td>Public</td><td>Checkout form — currency detection, Paystack or Stripe SDK, affiliate code pre-fill</td><td>No</td></tr>
+    <tr><td><code>/auth/callback</code></td><td>Public</td><td>Supabase OAuth callback handler</td><td>No</td></tr>
+    <tr><td><code>/onboarding</code></td><td>Protected</td><td>Post-payment onboarding steps; sets <code>users.onboarded = true</code> on completion</td><td>Yes</td></tr>
+    <tr><td><code>/dashboard</code></td><td>Protected</td><td>Member home — wallet summary, quick stats, referral link</td><td>Yes</td></tr>
+    <tr><td><code>/dashboard/wallet</code></td><td>Protected</td><td>Full wallet view — balances, transaction history, achievements</td><td>Yes</td></tr>
+    <tr><td><code>/dashboard/referrals</code></td><td>Protected</td><td>Affiliate stats — clicks, signups, conversions, revenue</td><td>Yes</td></tr>
+    <tr><td><code>/dashboard/ticket</code></td><td>Protected</td><td>Event ticket with QR code for May 29 launch event</td><td>Yes</td></tr>
+    <tr><td><code>/dashboard/community</code></td><td>Protected</td><td>Whop community link + access level info</td><td>Yes</td></tr>
+    <tr><td><code>/org/[slug]</code></td><td>Protected</td><td>Organization dashboard — members, revenue, leaderboard, referral link</td><td>Org member</td></tr>
+    <tr><td><code>/admin</code></td><td>Protected</td><td>Admin overview — key metrics</td><td>Admin role</td></tr>
+    <tr><td><code>/admin/users</code></td><td>Protected</td><td>User table — search, filter, edit, ban, export CSV</td><td>Admin role</td></tr>
+    <tr><td><code>/admin/payments</code></td><td>Protected</td><td>Payment log — filter by status, provider, tier</td><td>Admin role</td></tr>
+    <tr><td><code>/admin/affiliates</code></td><td>Protected</td><td>Top affiliates table, revenue, abuse flags</td><td>Admin role</td></tr>
+    <tr><td><code>/admin/organizations</code></td><td>Protected</td><td>Org list — approve, suspend</td><td>Admin role</td></tr>
+    <tr><td><code>/admin/events</code></td><td>Protected</td><td>Event check-in scanner UI — QR scan, mark attendance</td><td>Admin/Ops role</td></tr>
+    <tr><td><code>/admin/content</code></td><td>Protected</td><td>Manage partner logos, FAQs, metrics bar values</td><td>Admin role</td></tr>
+    <tr><td><code>/r/[code]</code></td><td>Public</td><td>Affiliate redirect — sets cookie, redirects to <code>/join?ref=code</code></td><td>No</td></tr>
+    <tr><td><code>/become-partner</code></td><td>Public</td><td>Organization/Hub partner application form</td><td>No</td></tr>
+    <tr><td><code>/become-affiliate</code></td><td>Public</td><td>Info page about the affiliate program; CTA to sign up</td><td>No</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Landing Page Sections (in order)</h3>
+<ol>
+  <li><strong>Hero</strong> — headline "Africa's Largest Builder Ecosystem", sub "Join 1M founders, creators and entrepreneurs", three CTAs: Join DOT / Become Partner / Become Affiliate. Full-viewport height with video or gradient background.</li>
+  <li><strong>Metrics Bar</strong> — animated counter for Members, Organizations, Cities, Hubs. Values pulled from a <code>/api/stats</code> endpoint (or hardcoded + live DB count).</li>
+  <li><strong>What Members Get</strong> — 5-item feature grid: 90-Day Builder Program, $2,000 Builder Credits, Founder Access, Community, Funding Pathways.</li>
+  <li><strong>Pricing Cards</strong> — all 5 tiers with price, features list, and CTA. Highlight VIP as recommended. Currency switcher (NGN / USD).</li>
+  <li><strong>Partner Logos</strong> — horizontal scrolling logo strip; logos loaded from <code>partner_logos</code> table or static array.</li>
+  <li><strong>FAQ</strong> — accordion component; content from <code>faqs</code> table or static JSON.</li>
+  <li><strong>Countdown</strong> — client-side countdown to Friday May 29, 2026. After date passes, replace with "Event is LIVE — Join Now".</li>
+</ol>
+
+<h3>Component Architecture</h3>
+<div class="card-grid">
+  <div class="card">
+    <div class="card-title">Global Components</div>
+    <p><code>Navbar</code>, <code>Footer</code>, <code>Button</code>, <code>Badge</code>, <code>Modal</code>, <code>Toast</code>, <code>Spinner</code>, <code>Avatar</code></p>
+  </div>
+  <div class="card">
+    <div class="card-title">Auth Components</div>
+    <p><code>LoginForm</code>, <code>OTPInput</code>, <code>GoogleSignIn</code>, <code>ProtectedRoute</code></p>
+  </div>
+  <div class="card">
+    <div class="card-title">Payment Components</div>
+    <p><code>PricingCard</code>, <code>CheckoutForm</code>, <code>CurrencyToggle</code>, <code>PaymentStatus</code></p>
+  </div>
+  <div class="card">
+    <div class="card-title">Dashboard Components</div>
+    <p><code>WalletCard</code>, <code>TransactionRow</code>, <code>AchievementBadge</code>, <code>ReferralWidget</code>, <code>QRTicket</code></p>
+  </div>
+  <div class="card">
+    <div class="card-title">Admin Components</div>
+    <p><code>MetricCard</code>, <code>DataTable</code>, <code>UserEditModal</code>, <code>CSVExportBtn</code>, <code>QRScanner</code></p>
+  </div>
+  <div class="card">
+    <div class="card-title">State Management</div>
+    <p>Supabase <code>useSession</code> hook for auth state. Zustand or React Context for UI state. SWR or React Query for server state.</p>
+  </div>
+</div>
+
+<h3>Currency Detection Logic</h3>
+<p>On the <code>/checkout/[tier]</code> page, detect the user's country via a free IP geolocation API (e.g. <code>ip-api.com</code> or Cloudflare's <code>CF-IPCountry</code> header). If Nigeria → show Paystack NGN flow. Otherwise → show Stripe USD flow. Allow manual currency override via a dropdown.</p>
+
+
+<!-- ═══════════════════════════════ S6 — AUTH ═══════════════════════════════ -->
+<div id="s6" class="section-header">
+  <span class="section-num">06</span>
+  <h2 class="section-title">Authentication System</h2>
+</div>
+
+<h3>Auth Methods</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Method</th><th>Provider</th><th>Use Case</th></tr></thead>
+  <tbody>
+    <tr><td>Google OAuth</td><td>Supabase Auth → Google Cloud</td><td>Primary recommended signup/login</td></tr>
+    <tr><td>Email OTP</td><td>Supabase Auth (magic link)</td><td>Fallback for non-Google users</td></tr>
+    <tr><td>Phone OTP</td><td>Supabase Auth → Twilio SMS</td><td>Phone verification post-signup (required for affiliates)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Post-Payment Auth Flow</h3>
+<div class="flow">
+  <div class="flow-step start">Payment Success</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Redirect to /auth/setup?token=...</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step check">Has Supabase account?</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">No: Show "Set Password" or "Continue with Google"</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Create auth.users entry</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Link to payments record</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step end">/onboarding</div>
+</div>
+
+<div class="callout callout-info">
+  The payment record stores the user's email <em>before</em> an auth account exists. After the auth account is created, the edge function links <code>payments.user_id</code> to the new <code>auth.users.id</code> and creates the <code>users</code> profile row.
+</div>
+
+<h3>User Roles (Supabase Custom Claims)</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Role</th><th>How Assigned</th><th>Access</th></tr></thead>
+  <tbody>
+    <tr><td><code>member</code></td><td>Default for all paid users</td><td>Dashboard, Wallet, Referrals, Ticket</td></tr>
+    <tr><td><code>org_admin</code></td><td>Assigned when org is approved</td><td>Member access + <code>/org/[slug]</code></td></tr>
+    <tr><td><code>ops</code></td><td>Manually assigned by super admin</td><td>Event check-in scanner</td></tr>
+    <tr><td><code>admin</code></td><td>Manually assigned by super admin</td><td>Full admin dashboard</td></tr>
+    <tr><td><code>super_admin</code></td><td>Set directly in DB</td><td>All access including role management</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Store role in <code>app_metadata.role</code> on <code>auth.users</code>. Access via <code>supabase.auth.getUser()</code> and enforce in both Middleware (Next.js) and RLS policies.</p>
+
+
+<!-- ═══════════════════════════════ S7 — PAYMENTS ═══════════════════════════════ -->
+<div id="s7" class="section-header">
+  <span class="section-num">07</span>
+  <h2 class="section-title">Payment System</h2>
+</div>
+
+<h3>Paystack Flow (Nigeria)</h3>
+<div class="flow">
+  <div class="flow-step start">User selects plan</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Frontend calls <code>/api/paystack/initiate</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Supabase edge fn creates pending payment row</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Returns Paystack auth URL</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">User pays on Paystack</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step check">Paystack fires webhook to <code>/functions/webhook/paystack</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Verify HMAC signature</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Idempotency check</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Run post-payment pipeline</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step end">Done</div>
+</div>
+
+<h3>Stripe Flow (Global)</h3>
+<div class="flow">
+  <div class="flow-step start">User selects plan</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Frontend calls <code>/api/stripe/create-session</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Edge fn creates Stripe Checkout Session</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Redirect to Stripe hosted checkout</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">Stripe fires webhook to <code>/functions/webhook/stripe</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Verify Stripe-Signature header</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Run post-payment pipeline</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step end">Done</div>
+</div>
+
+<h3>Post-Payment Pipeline (shared by both providers)</h3>
+<p>This is a single atomic transaction executed inside the webhook edge function:</p>
+<pre>
+async function runPostPaymentPipeline(paymentData) {
+  // 1. Update payments row status to 'success'
+  await db.payments.update({ status: 'success', paid_at: now() });
+
+  // 2. Create user profile (if not exists)
+  const user = await db.users.upsert({ email, tier, ... });
+
+  // 3. Generate unique referral_code (nanoid 8-char)
+  const referralCode = nanoid(8).toUpperCase();
+  await db.users.update({ referral_code: referralCode });
+
+  // 4. Create wallet
+  const wallet = await db.wallets.create({ user_id: user.id });
+
+  // 5. Credit builder credits based on tier
+  const credits = TIER_CREDITS[tier]; // { starter: 2000, vip: 5000, ... }
+  await db.wallet_transactions.insert({ type: 'credit', amount: credits, desc: 'Welcome credits' });
+  await db.wallets.update({ credit_balance: credits, lifetime_credits: credits });
+
+  // 6. Process affiliate commission (if referred_by exists)
+  if (referredBy) {
+    await processAffiliateCommission(referredBy, paymentData.amount);
+  }
+
+  // 7. Provision Whop community access
+  await whopAPI.createMembership({ email, tier });
+
+  // 8. Generate event ticket QR
+  await generateEventTicket(user.id, MAY_29_EVENT_ID);
+
+  // 9. Send email confirmation
+  await resend.sendWelcomeEmail(email, { user, wallet, qrUrl });
+
+  // 10. Send WhatsApp confirmation
+  await whatsapp.sendTemplate(phone, 'dot_welcome', { name, tier });
+
+  // 11. Track PostHog event
+  await posthog.capture('payment_success', { tier, amount, currency, referred_by });
+}
+</pre>
+
+<h3>Tier Credit Allocations</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Tier</th><th>NGN Price</th><th>USD Equiv.</th><th>Builder Credits</th><th>Whop Access Level</th></tr></thead>
+  <tbody>
+    <tr><td>Starter</td><td>₦30,000</td><td>$20</td><td>$2,000</td><td>General channels, courses, announcements</td></tr>
+    <tr><td>VIP</td><td>₦1,000,000</td><td>~$650</td><td>$5,000</td><td>+ VIP rooms</td></tr>
+    <tr><td>Pioneer</td><td>₦3,000,000</td><td>~$2,000</td><td>$10,000</td><td>+ Founder rooms</td></tr>
+    <tr><td>Corporate</td><td>₦30,000,000</td><td>~$20,000</td><td>$50,000</td><td>+ Partner rooms</td></tr>
+    <tr><td>Hub Partner</td><td>₦300,000,000</td><td>~$200,000</td><td>$200,000</td><td>Full access</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout callout-warn">
+  <strong>Builder Credits are not withdrawable.</strong> They are platform credits usable within the DOT ecosystem for future features (programs, tools, etc.). Do not expose them as real money or imply they are redeemable for cash.
+</div>
+
+
+<!-- ═══════════════════════════════ S8 — WALLET ═══════════════════════════════ -->
+<div id="s8" class="section-header">
+  <span class="section-num">08</span>
+  <h2 class="section-title">Wallet System</h2>
+</div>
+
+<p>The wallet is a <strong>view-only, internal ledger</strong> for the MVP. No withdrawals, no transfers, no P2P. Every balance mutation goes through an edge function — never a direct client DB write.</p>
+
+<h3>Wallet Fields Explained</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Field</th><th>Description</th><th>Mutable By</th></tr></thead>
+  <tbody>
+    <tr><td><code>credit_balance</code></td><td>Builder credits (e.g. $2,000 on Starter signup). Used for future features.</td><td>Edge functions only</td></tr>
+    <tr><td><code>reward_balance</code></td><td>Earned from affiliate commissions and achievements.</td><td>Edge functions only</td></tr>
+    <tr><td><code>reputation_score</code></td><td>Integer score reflecting platform engagement; powers leaderboards.</td><td>Edge functions only</td></tr>
+    <tr><td><code>lifetime_credits</code></td><td>Cumulative credits ever received. Never decreases. Shown on profile.</td><td>Edge functions only</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Wallet Dashboard UI Elements</h3>
+<ul>
+  <li>Balance cards: Credit Balance / Reward Balance / Reputation Score</li>
+  <li>Transaction history table (paginated, 20 per page)</li>
+  <li>Achievements grid (unlocked badges)</li>
+  <li>Referral summary widget with copy-link button</li>
+</ul>
+
+<h3>Reputation Score Events</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Event</th><th>Points</th></tr></thead>
+  <tbody>
+    <tr><td>Account created</td><td>+100</td></tr>
+    <tr><td>Onboarding completed</td><td>+50</td></tr>
+    <tr><td>First referral click</td><td>+10</td></tr>
+    <tr><td>Referral converts to paid user</td><td>+200</td></tr>
+    <tr><td>Attended launch event</td><td>+150</td></tr>
+    <tr><td>Each 5 paid referrals</td><td>+500 bonus</td></tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- ═══════════════════════════════ S9 — WHOP ═══════════════════════════════ -->
+<div id="s9" class="section-header">
+  <span class="section-num">09</span>
+  <h2 class="section-title">Whop Integration</h2>
+</div>
+
+<p>Whop manages the community layer. After payment, an edge function calls the Whop API to create or update a membership for the user at the correct access level.</p>
+
+<h3>Tier → Whop Access Mapping</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Tier</th><th>Whop Plan ID (configure in Whop dashboard)</th><th>Access</th></tr></thead>
+  <tbody>
+    <tr><td>Starter</td><td><code>WHOP_PLAN_STARTER</code></td><td>General channels, announcements, courses</td></tr>
+    <tr><td>VIP</td><td><code>WHOP_PLAN_VIP</code></td><td>All Starter + VIP rooms</td></tr>
+    <tr><td>Pioneer</td><td><code>WHOP_PLAN_PIONEER</code></td><td>All VIP + Founder rooms</td></tr>
+    <tr><td>Corporate</td><td><code>WHOP_PLAN_CORPORATE</code></td><td>All Pioneer + Partner rooms</td></tr>
+    <tr><td>Hub Partner</td><td><code>WHOP_PLAN_HUB</code></td><td>Full access to all rooms</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Whop API Calls (Edge Function)</h3>
+<pre>
+// Create Whop membership post-payment
+POST https://api.whop.com/api/v2/memberships
+Authorization: Bearer WHOP_API_KEY
+{
+  "plan_id": WHOP_PLAN_IDS[tier],
+  "email": user.email,
+  "metadata": { "dot_user_id": user.id, "tier": tier }
+}
+
+// Response: { membership_id, access_pass_id, discord_account_id, ... }
+// Store membership_id in users.whop_id
+</pre>
+
+<div class="callout callout-info">
+  If Whop provisioning fails, log the error but do NOT block the payment pipeline. Queue a retry job (implement as a <code>whop_pending</code> table and a scheduled edge function that retries every 5 minutes). The user should always get their account even if Whop is down.
+</div>
+
+
+<!-- ═══════════════════════════════ S10 — AFFILIATES ═══════════════════════════════ -->
+<div id="s10" class="section-header">
+  <span class="section-num">10</span>
+  <h2 class="section-title">Affiliate System</h2>
+</div>
+
+<h3>How It Works</h3>
+<ol>
+  <li>Every user automatically receives a unique <code>referral_code</code> on account creation.</li>
+  <li>Their referral link is: <code>https://joindot.africa/r/[referral_code]</code></li>
+  <li>The <code>/r/[code]</code> Next.js route sets a cookie: <code>dot_ref=CODE; max-age=604800</code> (7 days), then redirects to <code>/join?ref=CODE</code>.</li>
+  <li>At checkout, the <code>ref</code> param or cookie is embedded as a hidden field in the payment form and stored in <code>payments.affiliate_code</code>.</li>
+  <li>When payment succeeds, the webhook handler calls <code>processAffiliateCommission()</code>.</li>
+</ol>
+
+<h3>Commission Processing</h3>
+<pre>
+async function processAffiliateCommission(referralCode, paymentAmount) {
+  const affiliate = await db.affiliates.findByCode(referralCode);
+  if (!affiliate || !affiliate.is_active) return;
+
+  const commission = paymentAmount * (affiliate.commission_rate / 100);
+
+  // Credit reward_balance on the affiliate's wallet
+  await db.wallets.increment({ reward_balance: commission });
+  await db.wallet_transactions.insert({
+    type: 'reward',
+    amount: commission,
+    description: `Referral commission from ${paymentAmount}`,
+    reference: referralCode
+  });
+
+  // Update affiliate stats
+  await db.affiliates.increment({
+    total_paid: 1,
+    total_revenue: paymentAmount
+  });
+
+  // Update the referred user's record
+  await db.users.update({ referred_by: referralCode });
+
+  // Check and grant achievements
+  await checkAffiliateAchievements(affiliate.user_id);
+}
+</pre>
+
+<h3>Anti-Abuse Rules</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Rule</th><th>Implementation</th></tr></thead>
+  <tbody>
+    <tr><td>No self-referral</td><td>Block if <code>affiliate.user_id === new_user.id</code> or same email</td></tr>
+    <tr><td>Duplicate device detection</td><td>Hash of <code>IP + User-Agent + screen size</code> stored in <code>affiliate_clicks.device_hash</code>; flag if same hash pays twice within 24h</td></tr>
+    <tr><td>Phone verification required</td><td>Affiliate stats only visible after phone OTP is verified</td></tr>
+    <tr><td>Email verification</td><td>Referral commission only credited after referred user verifies email</td></tr>
+    <tr><td>Commission hold</td><td>Commission sits in <code>reward_balance</code>; not accessible until MVP Phase 2 when withdrawal is built</td></tr>
+    <tr><td>Abuse flag</td><td>Admin can set <code>affiliates.is_active = FALSE</code> to freeze a code</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Affiliate Stats Page (<code>/dashboard/referrals</code>)</h3>
+<ul>
+  <li>Referral link with one-click copy</li>
+  <li>Stats: Total Clicks / Total Signups / Paid Conversions / Total Revenue Generated</li>
+  <li>Commission earned (displayed as reward balance)</li>
+  <li>Recent referral activity table (last 20 events)</li>
+  <li>Social share buttons (Twitter/X, WhatsApp, Copy Link)</li>
+</ul>
+
+
+<!-- ═══════════════════════════════ S11 — ADMIN ═══════════════════════════════ -->
+<div id="s11" class="section-header">
+  <span class="section-num">11</span>
+  <h2 class="section-title">Admin Dashboard</h2>
+</div>
+
+<h3>Overview Metrics</h3>
+<div class="card-grid">
+  <div class="card"><div class="card-title">Total Users</div><p>Count of <code>users</code> table rows</p></div>
+  <div class="card"><div class="card-title">Total Revenue</div><p>Sum of <code>payments.amount</code> where <code>status='success'</code></p></div>
+  <div class="card"><div class="card-title">Revenue (NGN)</div><p>Filtered by <code>currency='NGN'</code></p></div>
+  <div class="card"><div class="card-title">Revenue (USD)</div><p>Filtered by <code>currency='USD'</code></p></div>
+  <div class="card"><div class="card-title">Active Organizations</div><p>Count of orgs with <code>status='active'</code></p></div>
+  <div class="card"><div class="card-title">Event Check-ins</div><p>Count of <code>event_tickets.checked_in = TRUE</code></p></div>
+</div>
+
+<h3>Admin Actions</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Action</th><th>Implementation</th></tr></thead>
+  <tbody>
+    <tr><td>Search users</td><td>Full-text search on <code>users.name</code>, <code>email</code>, <code>phone</code>, <code>referral_code</code></td></tr>
+    <tr><td>Filter by tier</td><td>WHERE clause on <code>users.tier</code></td></tr>
+    <tr><td>Edit user</td><td>Modal form; fields: name, tier, org, notes. Updates via edge function.</td></tr>
+    <tr><td>Ban user</td><td>Sets <code>auth.users.banned_until = 'infinity'</code> via Supabase Admin API</td></tr>
+    <tr><td>Approve organization</td><td>Sets <code>organizations.status = 'active'</code>, assigns <code>org_admin</code> role</td></tr>
+    <tr><td>Export CSV</td><td>Client-side export from current table state; fields: id, name, email, phone, tier, created_at</td></tr>
+    <tr><td>View affiliate leaderboard</td><td>Top 20 affiliates ordered by <code>total_revenue DESC</code></td></tr>
+    <tr><td>Manage FAQs &amp; partner logos</td><td>CRUD interface for <code>faqs</code> and <code>partner_logos</code> tables</td></tr>
+  </tbody>
+</table>
+</div>
+
+
+<!-- ═══════════════════════════════ S12 — ORG DASHBOARD ═══════════════════════════════ -->
+<div id="s12" class="section-header">
+  <span class="section-num">12</span>
+  <h2 class="section-title">Organization Dashboard</h2>
+</div>
+
+<p>Available to users with the <code>org_admin</code> role. Route: <code>/org/[slug]</code>. Org admins can only see their own org data (enforced by RLS).</p>
+
+<h3>Dashboard Widgets</h3>
+<ul>
+  <li><strong>Org name + logo</strong> — from <code>organizations</code> table</li>
+  <li><strong>Members onboarded</strong> — count of <code>users</code> where <code>organization_id = this_org.id</code></li>
+  <li><strong>Revenue generated</strong> — sum of payments from org members</li>
+  <li><strong>Leaderboard position</strong> — rank of this org among all orgs by revenue</li>
+  <li><strong>Org referral link</strong> — <code>joindot.africa/r/[org.referral_code]</code> with copy button</li>
+  <li><strong>Member table</strong> — name, tier, joined date (no sensitive data)</li>
+</ul>
+
+<h3>Org Referral Link</h3>
+<p>The organization has its own <code>referral_code</code> that credits the org account. When a user signs up via the org link, they are automatically linked to the organization (<code>users.organization_id</code> is set). Org revenue is computed from all member payments.</p>
+
+
+<!-- ═══════════════════════════════ S13 — EVENT ═══════════════════════════════ -->
+<div id="s13" class="section-header">
+  <span class="section-num">13</span>
+  <h2 class="section-title">Event &amp; Check-in System</h2>
+</div>
+
+<h3>Ticket Generation Flow</h3>
+<div class="flow">
+  <div class="flow-step start">Payment succeeds</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Edge fn: generate UUID token</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Insert <code>event_tickets</code> row</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Generate QR PNG using <code>qrcode</code> npm</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Upload PNG to R2</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step action">Store R2 URL in <code>qr_url</code></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step end">QR visible at <code>/dashboard/ticket</code></div>
+</div>
+
+<h3>QR Token Structure</h3>
+<pre>
+// QR code encodes a URL like:
+"https://joindot.africa/checkin?token=DOT-A3F9X2K1"
+
+// token = "DOT-" prefix + 8-char nanoid stored in event_tickets.qr_code
+// The scanner POSTs this token to the check-in edge function
+</pre>
+
+<h3>Check-in Scanner UI (<code>/admin/events</code>)</h3>
+<ul>
+  <li>Camera-based QR scanner using <code>html5-qrcode</code> or <code>@zxing/browser</code> library</li>
+  <li>On scan: POST token to <code>/functions/event/checkin</code></li>
+  <li>Response: success (name, tier, badge) or error (invalid token / already checked in)</li>
+  <li>Visual: green flash for success, red flash for error</li>
+  <li>Sound: optional beep on success</li>
+  <li>Ops staff can also manually enter ticket token via text input fallback</li>
+</ul>
+
+<h3>Check-in Edge Function Logic</h3>
+<pre>
+async function handleCheckin(token, ops_user_id) {
+  const ticket = await db.event_tickets.findByQR(token);
+
+  if (!ticket) return error('INVALID_TOKEN');
+  if (ticket.checked_in) return error('ALREADY_CHECKED_IN', ticket.checked_in_at);
+
+  await db.event_tickets.update({
+    checked_in: true,
+    checked_in_at: now(),
+    checked_in_by: ops_user_id
+  });
+
+  // Award reputation points for attending
+  await db.wallets.incrementReputation(ticket.user_id, 150);
+  await grantAchievement(ticket.user_id, 'launch_event_attendee');
+
+  return success({ user: ticket.user, tier: ticket.user.tier });
+}
+</pre>
+
+<h3>Ticket Display Page (<code>/dashboard/ticket</code>)</h3>
+<ul>
+  <li>Full-screen QR code (from <code>event_tickets.qr_url</code>) optimized for phone screen display</li>
+  <li>Event name, date, venue</li>
+  <li>Member name and tier badge</li>
+  <li>Download QR button (saves PNG to phone)</li>
+  <li>Add to Apple Wallet / Google Wallet (Phase 2 — not MVP)</li>
+</ul>
+
+
+<!-- ═══════════════════════════════ S14 — NOTIFICATIONS ═══════════════════════════════ -->
+<div id="s14" class="section-header">
+  <span class="section-num">14</span>
+  <h2 class="section-title">Notification System</h2>
+</div>
+
+<h3>Email (via Resend)</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Trigger</th><th>Template</th><th>Content</th></tr></thead>
+  <tbody>
+    <tr><td>Payment success</td><td><code>welcome</code></td><td>Welcome message, tier info, dashboard link, QR ticket attached</td></tr>
+    <tr><td>Referral conversion</td><td><code>referral_paid</code></td><td>"Your referral [name] just signed up! Commission added."</td></tr>
+    <tr><td>Account created</td><td><code>verify_email</code></td><td>Email verification link (via Supabase Auth)</td></tr>
+    <tr><td>Event reminder</td><td><code>event_reminder</code></td><td>Sent 24h before May 29. Includes QR code, venue, time.</td></tr>
+    <tr><td>Password reset</td><td>Supabase default</td><td>Handled by Supabase Auth</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>WhatsApp (Meta Business API or Twilio)</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Trigger</th><th>Template Name</th><th>Variables</th></tr></thead>
+  <tbody>
+    <tr><td>Payment success</td><td><code>dot_welcome</code></td><td>{{name}}, {{tier}}, {{dashboard_url}}</td></tr>
+    <tr><td>Event reminder</td><td><code>dot_event_reminder</code></td><td>{{name}}, {{event_date}}, {{venue}}</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="callout callout-warn">
+  <strong>WhatsApp templates must be pre-approved by Meta</strong> before they can be sent. Submit templates to Meta for review at least 3–5 business days before launch. Phone number must be verified in the Meta Business Manager.
+</div>
+
+
+<!-- ═══════════════════════════════ S15 — EDGE FUNCTIONS ═══════════════════════════════ -->
+<div id="s15" class="section-header">
+  <span class="section-num">15</span>
+  <h2 class="section-title">Backend — Edge Functions &amp; API Routes</h2>
+</div>
+
+<div class="callout callout-info">
+  Sensitive operations run as <strong>Supabase Edge Functions</strong> (Deno). Read-only data fetching can use direct Supabase JS client calls from the Next.js server. Never expose payment provider keys or admin Supabase keys to the browser.
+</div>
+
+<h3>Supabase Edge Functions</h3>
+<div class="endpoint-list">
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/webhook/paystack</span>
+    <span class="endpoint-desc">Paystack webhook receiver. Verifies HMAC-SHA512 signature, runs post-payment pipeline.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/webhook/stripe</span>
+    <span class="endpoint-desc">Stripe webhook receiver. Verifies Stripe-Signature, handles checkout.session.completed event.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/payment/initiate</span>
+    <span class="endpoint-desc">Creates pending payment row, returns Paystack auth URL or Stripe session URL.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/event/checkin</span>
+    <span class="endpoint-desc">Validates QR token, marks ticket checked_in, awards reputation. Requires ops/admin role.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/affiliate/track-click</span>
+    <span class="endpoint-desc">Logs affiliate click with IP, user agent, device hash. Called from /r/[code] page.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/admin/ban-user</span>
+    <span class="endpoint-desc">Admin only. Calls Supabase Admin API to set banned_until on auth.users.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/admin/approve-org</span>
+    <span class="endpoint-desc">Admin only. Sets org status to active, assigns org_admin role to contact user.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-post">POST</span>
+    <span class="endpoint-path">/functions/v1/whop/provision</span>
+    <span class="endpoint-desc">Internal. Creates or updates Whop membership. Called from post-payment pipeline. Includes retry logic.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/functions/v1/stats/public</span>
+    <span class="endpoint-desc">Returns public metrics for landing page metrics bar: member_count, org_count, city_count, hub_count.</span>
+  </div>
+</div>
+
+<h3>Next.js API Routes (for client-side use)</h3>
+<div class="endpoint-list">
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/stats</span>
+    <span class="endpoint-desc">Public. Returns landing page metrics. Cached at 60s.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/user/me</span>
+    <span class="endpoint-desc">Authenticated. Returns current user profile + wallet summary.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/user/transactions</span>
+    <span class="endpoint-desc">Authenticated. Paginated wallet transaction history.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/user/ticket</span>
+    <span class="endpoint-desc">Authenticated. Returns event ticket + QR URL for current user.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/affiliate/stats</span>
+    <span class="endpoint-desc">Authenticated. Returns affiliate stats for current user.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/admin/users</span>
+    <span class="endpoint-desc">Admin only. Paginated user list with search/filter.</span>
+  </div>
+  <div class="endpoint">
+    <span class="method method-get">GET</span>
+    <span class="endpoint-path">/api/admin/metrics</span>
+    <span class="endpoint-desc">Admin only. Full metrics dashboard data.</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════ S16 — SECURITY & RLS ═══════════════════════════════ -->
+<div id="s16" class="section-header">
+  <span class="section-num">16</span>
+  <h2 class="section-title">Security &amp; RLS Policies</h2>
+</div>
+
+<h3>Core RLS Policies</h3>
+<pre>
+-- users: users can only read/update their own row
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "users_self_select" ON users FOR SELECT USING (auth.uid() = id);
+CREATE POLICY "users_self_update" ON users FOR UPDATE USING (auth.uid() = id);
+-- Admin override: service_role key bypasses RLS (used only in edge functions)
+
+-- wallets: user can read their own wallet
+ALTER TABLE wallets ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "wallet_self_select" ON wallets FOR SELECT USING (user_id = auth.uid());
+-- NO INSERT/UPDATE/DELETE from client — wallets modified only by edge functions
+
+-- wallet_transactions: user can read own transactions
+ALTER TABLE wallet_transactions ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "txn_self_select" ON wallet_transactions
+  FOR SELECT USING (wallet_id IN (SELECT id FROM wallets WHERE user_id = auth.uid()));
+
+-- affiliates: user can read own stats
+ALTER TABLE affiliates ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "aff_self_select" ON affiliates FOR SELECT USING (user_id = auth.uid());
+
+-- organizations: org_admin can see own org
+ALTER TABLE organizations ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "org_admin_select" ON organizations FOR SELECT
+  USING (id IN (SELECT organization_id FROM users WHERE id = auth.uid()));
+
+-- event_tickets: user can read own ticket
+ALTER TABLE event_tickets ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "ticket_self_select" ON event_tickets FOR SELECT USING (user_id = auth.uid());
+
+-- Public read-only tables (no auth required)
+CREATE POLICY "partner_logos_public" ON partner_logos FOR SELECT USING (active = TRUE);
+CREATE POLICY "faqs_public" ON faqs FOR SELECT USING (active = TRUE);
+CREATE POLICY "events_public" ON events FOR SELECT USING (is_active = TRUE);
+</pre>
+
+<h3>Admin Access</h3>
+<p>Admin functions use the Supabase <strong>service_role</strong> key which bypasses RLS entirely. This key is stored only in Supabase Edge Function secrets and never exposed to the browser or Next.js client.</p>
+
+<h3>Webhook Security</h3>
+<pre>
+// Paystack: verify X-Paystack-Signature header
+const hash = crypto.createHmac('sha512', PAYSTACK_SECRET_KEY)
+  .update(JSON.stringify(body)).digest('hex');
+if (hash !== req.headers['x-paystack-signature']) return 401;
+
+// Stripe: verify Stripe-Signature header
+const event = stripe.webhooks.constructEvent(
+  rawBody, req.headers['stripe-signature'], STRIPE_WEBHOOK_SECRET
+);
+</pre>
+
+<h3>Additional Security Measures</h3>
+<ul>
+  <li>All Next.js routes protected by Middleware using <code>@supabase/ssr</code> session check</li>
+  <li>HTTPS enforced on all endpoints (Vercel + Cloudflare)</li>
+  <li>Rate limiting on payment initiation endpoint (max 5 requests/minute per IP)</li>
+  <li>Input sanitization on all form fields before DB write</li>
+  <li>PostHog events never include PII (no email/phone in event properties)</li>
+  <li>R2 bucket for QR codes is public-read; URLs are non-guessable UUIDs</li>
+</ul>
+
+
+<!-- ═══════════════════════════════ S17 — ENV VARS ═══════════════════════════════ -->
+<div id="s17" class="section-header">
+  <span class="section-num">17</span>
+  <h2 class="section-title">Environment Variables</h2>
+</div>
+
+<div class="callout callout-danger">
+  <strong>Never commit secrets to Git.</strong> Store in Vercel Environment Variables (frontend) and Supabase Edge Function Secrets (backend). Use separate values for development, staging, and production.
+</div>
+
+<h3>Next.js (.env.local / Vercel)</h3>
+<pre class="env-list">
+# Supabase (public — safe to expose to browser)
+NEXT_PUBLIC_SUPABASE_URL=https://[project-id].supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+
+# Paystack (public key only — safe to expose)
+NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_live_...
+
+# Stripe (public key only — safe to expose)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+
+# PostHog
+NEXT_PUBLIC_POSTHOG_KEY=phc_...
+NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
+
+# App
+NEXT_PUBLIC_APP_URL=https://joindot.africa
+NEXT_PUBLIC_WHOP_PRODUCT_ID=prod_...
+</pre>
+
+<h3>Supabase Edge Function Secrets</h3>
+<pre class="env-list">
+# Supabase service role (admin, bypasses RLS)
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+
+# Paystack (secret key — server only)
+PAYSTACK_SECRET_KEY=sk_live_...
+
+# Stripe (secret key — server only)
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Whop
+WHOP_API_KEY=...
+
+# Cloudflare R2
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_BUCKET_NAME=dot-assets
+R2_PUBLIC_URL=https://assets.joindot.africa
+
+# Email (Resend)
+RESEND_API_KEY=re_...
+EMAIL_FROM=hello@joindot.africa
+
+# WhatsApp (Twilio or direct Meta)
+WHATSAPP_PHONE_NUMBER_ID=...
+WHATSAPP_ACCESS_TOKEN=...
+
+# SMS (Twilio for phone OTP via Supabase)
+TWILIO_ACCOUNT_SID=...
+TWILIO_AUTH_TOKEN=...
+</pre>
+
+
+<!-- ═══════════════════════════════ S18 — TIMELINE ═══════════════════════════════ -->
+<div id="s18" class="section-header">
+  <span class="section-num">18</span>
+  <h2 class="section-title">Build Timeline</h2>
+</div>
+
+<div class="timeline">
+  <div class="week">
+    <div class="week-label">WEEK 1</div>
+    <div class="week-content">
+      <div class="week-content-title">Landing Page + Payment</div>
+      <div class="week-items">
+        <span class="week-item">joindot.africa domain + Cloudflare DNS</span>
+        <span class="week-item">Supabase project setup + DB schema migration</span>
+        <span class="week-item">Landing page — all 7 sections</span>
+        <span class="week-item">Paystack integration (NGN)</span>
+        <span class="week-item">Stripe integration (USD)</span>
+        <span class="week-item">Payment initiation edge function</span>
+        <span class="week-item">Webhook handlers (Paystack + Stripe)</span>
+        <span class="week-item">Post-payment pipeline (partial — user + wallet creation)</span>
+        <span class="week-item">Vercel deployment + CI pipeline</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="week">
+    <div class="week-label">WEEK 2</div>
+    <div class="week-content">
+      <div class="week-content-title">Auth + Member Dashboard</div>
+      <div class="week-items">
+        <span class="week-item">Google OAuth setup</span>
+        <span class="week-item">Email OTP + Phone OTP</span>
+        <span class="week-item">Auth middleware + protected routes</span>
+        <span class="week-item">Onboarding flow (5-step)</span>
+        <span class="week-item">Member dashboard home</span>
+        <span class="week-item">Event ticket page + QR display</span>
+        <span class="week-item">Email notifications (Resend)</span>
+        <span class="week-item">WhatsApp template submission to Meta</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="week">
+    <div class="week-label">WEEK 3</div>
+    <div class="week-content">
+      <div class="week-content-title">Wallet + Whop</div>
+      <div class="week-items">
+        <span class="week-item">Wallet dashboard UI (balances + transactions)</span>
+        <span class="week-item">Achievements system</span>
+        <span class="week-item">Reputation scoring</span>
+        <span class="week-item">Whop API integration + tier provisioning</span>
+        <span class="week-item">Whop retry queue</span>
+        <span class="week-item">QR code generation + R2 upload</span>
+        <span class="week-item">Event check-in scanner UI</span>
+        <span class="week-item">WhatsApp notifications (after Meta approval)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="week">
+    <div class="week-label">WEEK 4</div>
+    <div class="week-content">
+      <div class="week-content-title">Affiliate + Admin + Launch Prep</div>
+      <div class="week-items">
+        <span class="week-item">Affiliate stats dashboard</span>
+        <span class="week-item">Affiliate click tracking + cookie system</span>
+        <span class="week-item">Anti-abuse checks</span>
+        <span class="week-item">Organization dashboard</span>
+        <span class="week-item">Admin dashboard (all metrics + actions)</span>
+        <span class="week-item">CSV export</span>
+        <span class="week-item">PostHog event instrumentation</span>
+        <span class="week-item">Load testing (simulate 10k concurrent users)</span>
+        <span class="week-item">Security audit of RLS policies</span>
+        <span class="week-item">Launch day runbook + ops briefing</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="callout callout-success">
+  <strong>Launch Day (May 29):</strong> Ops team on the ground at Family Hall with check-in scanner. Admin dashboard open on standby. Monitoring: PostHog live events + Supabase logs + Vercel function logs. All non-MVP features remain hidden behind feature flags — do not ship partially-built features even as UI stubs.
+</div>
+
+<hr />
+
+<div style="text-align: center; padding: 24px 0; font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em;">
+  DOT ENGINEERING BLUEPRINT v1.0 · CONFIDENTIAL · joindot.africa · COHORT I LAUNCH MAY 29 2026
+</div>
+
+</body>
+</html>
